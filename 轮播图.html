@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/fonts/style.css">
+    <script src="jquery.min.js"></script>
+    <style>
+        ul,
+        ol {
+            padding: 0;
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        img {
+            border: 0;
+            vertical-align: middle;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        div {
+            position: relative;
+            width: 590px;
+            height: 470px;
+            background-color: pink;
+            margin: 200px auto;
+            overflow: hidden;
+        }
+
+        ul {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 600%;
+        }
+
+        li {
+            float: left;
+        }
+
+        .arrow {
+            position: absolute;
+            font-size: 40px;
+            display: none;
+        }
+
+        .icon-cheveron-left {
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .icon-cheveron-right {
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        ol {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        ol li {
+            margin: 0 3px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #fff;
+        }
+
+
+        .current {
+            background-color: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <a href="javascript:;" class="arrow icon-cheveron-left arrow_l"></a>
+        <a href="javascript:;" class="arrow icon-cheveron-right arrow_r"></a>
+        <ul>
+            <li><a href="javascript:;"> <img src="q-1.jpg" alt=""></a></li>
+
+            <li><a href="javascript:;"> <img src="q-2.jpg" alt=""></a></li>
+
+            <li><a href="javascript:;"> <img src="q-3.jpg" alt=""></a></li>
+
+            <li><a href="javascript:;"> <img src="q-4.jpg" alt=""></a></li>
+
+            <li><a href="javascript:;"> <img src="q-5.jpg" alt=""></a></li>
+        </ul>
+        <ol>
+        </ol>
+    </div>
+    <script>
+        $(function () {
+
+            $("div").on("mouseenter", function () {
+                $(".arrow").fadeIn();
+                clearInterval(timer);
+                timer = null;
+
+            })
+            $("div").on("mouseleave", function () {
+                $(".arrow").fadeOut();
+                timer = setInterval(function () {
+                    $(".arrow_r").click();
+                }, 2000);
+            })
+            var img_num = $("ul").children().length;
+            $("ul").children().each(function () {
+                var circle = "<li></li>"
+                $("ol").append(circle);
+            })
+            $("ol").children().eq(0).addClass("current");
+            var index = 0;
+            var circle = 0;
+            $("ol").on("click", "li", function () {
+                $(this).addClass("current").siblings().removeClass("current");
+
+                index = $(this).index();
+                console.log(index);
+                var distance = index * $("div").width();
+                $("ul").stop().animate({ left: -distance })
+                // animate($("ul"),distance);
+            })
+
+            console.log(index);
+            $(".arrow_l").on("click", function () {
+                var ul = document.querySelector("ul");
+                if (index == 0) {
+                    ul.style.left = -img_num * $("div").width() + 'px';
+                    index = img_num;
+                    console.log(index);
+                }
+                index--;
+                var distance = index * $("div").width();
+                $("ul").stop().animate({ left: -distance })
+                circle--;
+                if (circle < 0) {
+                    circle = img_num - 1;
+                }
+                $("ol").children().eq(circle).addClass("current").siblings().removeClass("current");;
+
+            })
+            $(".arrow_r").on("click", function () {
+                var ul = document.querySelector("ul");
+                if (index == img_num) {
+                    ul.style.left = 0;
+                    index = 0;
+                    console.log(index);
+                }
+                index++;
+                var distance = index * $("div").width();
+                $("ul").stop().animate({ left: -distance })
+                circle++;
+                if (circle == img_num) {
+                    circle = 0;
+                }
+                $("ol").children().eq(circle).addClass("current").siblings().removeClass("current");;
+
+            })
+            var last_img = $("ul").children().eq(0).clone();
+            $("ul").append(last_img);
+            console.log(img_num);
+            var timer = setInterval(function () {
+                $(".arrow_r").click();
+            }, 2000);
+        })
+    </script>
+</body>
+
+</html>

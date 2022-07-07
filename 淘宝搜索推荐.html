@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery.min.js"></script>
+    <script src="template-web.js"></script>
+    <style>
+        .search {
+            margin: 400px auto 0;
+            padding-left: 500px;
+        }
+
+        .search_input {
+            width: 600px;
+            height: 50px;
+        }
+
+        .search_button {
+            width: 100px;
+            height: 50px;
+        }
+
+        .search_list {
+            padding-left: 500px;
+        }
+
+        .suggest_item {
+            font-size: 26px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #eee;
+
+        }
+
+        .suggest_item:hover {
+            cursor: pointer;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="search">
+        <input type="text" class="search_input">
+        <button type="submit" class="search_button">搜索</button>
+    </div>
+    <div class="search_list">
+
+    </div>
+    <script type="text/html" id="tpl-suggestList">
+        {{each result}}
+        <div class="suggest_item">{{$value[0]}}</div>
+        {{/each}}
+    </script>
+    <script>
+        $(function () {
+            $(".search_input").on("keyup", function () {
+                clearTimeout(timer);
+                var str = $(this).val().trim();
+                if (str.length <= 0) {
+                    return $('.search_list').empty().hide();;
+                }
+
+                console.log(str);
+                // getSuggestList(str);
+                denounceSuggestList(str);
+            });
+            function getSuggestList(res) {
+                $.ajax({
+                    url: "https://suggest.taobao.com/sug?q=" + res,
+                    dataType: "jsonp",
+                    success: function (res) {
+                        console.log(res);
+                        renderSuggestList(res);
+                    }
+                })
+            }
+            function renderSuggestList(res) {
+                if (res.length <= 0) {
+                    return $('.search_list').empty().hide();
+                }
+                console.log(1);
+                var htmlStr = template("tpl-suggestList", res);
+                $(".search_list").html(htmlStr).show();
+            }
+            var timer = null;
+            function denounceSuggestList(str) {
+                timer = setTimeout(function () {
+                    getSuggestList(str);
+                }, 500)
+            }
+        })
+    </script>
+</body>
+
+</html>

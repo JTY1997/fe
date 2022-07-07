@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery.min.js"></script>
+</head>
+
+<body>
+    <button id="btnAjax-get">Ajax-get</button>
+    <button id="btnAjax-post">Ajax-post</button>
+    <script>
+        $(function () {
+            $("#btnAjax-get").on("click", function () {
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://www.liulongbin.top:3006/api/getbooks',
+                    data: {
+                        id: 1
+                    },
+                    success: function (res) {
+                        console.log(res)
+                    }
+                })
+            })
+            $("#btnAjax-post").on("click", function () {
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://www.liulongbin.top:3006/api/addbook',
+                    data: {
+                        bookname: '金瓶梅',
+                        author: '斯巴达三百勇士',
+                        publisher: '无敌赛博坦'
+                    },
+                    success: function (res) {
+                        console.log(res)
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>

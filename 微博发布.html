@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery.min.js"></script>
+    <style>
+        .container {
+            width: 600px;
+            height: 800px;
+            border: 1px solid;
+            margin: 100px auto;
+            padding: 30px;
+        }
+
+        .shuru {
+            height: 400px;
+            border: 1px solid;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .content {
+            width: 300px;
+            height: 300px;
+
+        }
+
+        .list_content {
+            height: 350px;
+            background-color: pink;
+            overflow: hidden;
+        }
+
+        ul {
+            height: 350px;
+            padding: 0;
+            margin: 0;
+            overflow: auto;
+        }
+
+        li {
+            position: relative;
+            list-style: none;
+            padding: 30px;
+            border: 1px solid;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        li a {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="shuru">
+            <form action="#">
+                <label for="">请输入内容</label>
+                <input type="textarea" class="content">
+                <button>发布</button>
+            </form>
+        </div>
+        <div class="list_content">
+            <ul>
+                <!-- <li>
+                    <a href="javascript:;">删除</a>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("button").on("click", function () {
+                console.dir($(".content"));
+                if ($(".content").val() == "") {
+                    console.log(1);
+                    return false;
+                } else {
+                    console.log(2);
+                    var content = $(".content").val();
+                    var li = $("<li></li>");
+                    li.html(content + "<a href='javascript:; '>删除</a>");
+                    console.log(content);
+                    li.prependTo("ul");
+                    li.slideDown();
+                    $(".content").val("");
+                }
+            });
+            $("ul").on("click", "li a", function () {
+                console.log(1);
+                $(this).parent().slideUp(function () {
+                    $(this).remove();
+                });
+
+            })
+        })
+    </script>
+</body>
+
+</html>

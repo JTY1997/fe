@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        ul {
+
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            float: left;
+            width: 200px;
+            height: 50px;
+            list-style: none;
+            border: 1px solid red;
+            box-sizing: border-box;
+            border-collapse: collapse;
+        }
+
+        div {
+            width: 1200px;
+            height: 50px;
+            background-color: pink;
+            margin: 300px auto;
+        }
+
+        .current {
+            background: url(1.jpg) no-repeat;
+            background-size: contain;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <ul>
+            <li class="current">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+        </ul>
+    </div>
+    <script>
+        $(function () {
+            var current_index = 0;
+            $("li").on("mouseenter", function () {
+                $(this).addClass("current").siblings().removeClass("current");
+            })
+            $("li").on("mouseout", function () {
+                $("li").eq(current_index).addClass("current").siblings().removeClass("current");
+            })
+            $("li").on("click", function () {
+                current_index = $(this).index();
+                $(this).addClass("current").siblings().removeClass("current");
+
+            })
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        ul {
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            position: relative;
+            float: left;
+            width: 50px;
+            height: 50px;
+            list-style: none;
+            background-color: pink;
+            border: 2px solid red;
+        }
+
+        .small {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            background-color: hotpink;
+        }
+
+        .big {
+            display: none;
+            width: 200px;
+            height: 50px;
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li style="width: 200px;">
+            <div class="small" style="display:none">1</div>
+            <div class="big" style="display:block">2</div>
+        </li>
+        <li>
+            <div class="small">1</div>
+            <div class="big">2</div>
+        </li>
+        <li>
+            <div class="small">1</div>
+            <div class="big">2</div>
+        </li>
+        <li>
+            <div class="small">1</div>
+            <div class="big">2</div>
+        </li>
+    </ul>
+
+    <script>
+        $(function () {
+            $("li").each(function () {
+                $(this).on("mouseenter", function () {
+                    $(this).stop().animate(
+                        {
+                            width: "200px"
+                        }
+                    ).find(".small").fadeOut().siblings(".big").fadeIn();
+                    $(this).siblings().stop().animate(
+                        {
+                            width: "50px"
+                        }
+                    ).find(".big").fadeOut().siblings(".small").fadeIn();
+                })
+
+            });
+        })
+    </script>
+</body>
+
+</html>
